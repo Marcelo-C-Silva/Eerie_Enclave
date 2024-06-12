@@ -1,0 +1,19 @@
+<h1>Character: <%= @character.nome %></h1>
+
+<p>
+  <strong>Nome:</strong>
+  <%= @character.nome %>
+</p>
+
+<p>
+  <strong>Habilidade:</strong>
+  <%= @character.ability %>
+</p>
+
+<p>
+  <strong>Descrição:</strong>
+  <%= @character.description %>
+</p>
+
+<%= link_to 'Edit', edit_character_path(@character) %> |
+<%= link_to 'Back', characters_path %>
