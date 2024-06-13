@@ -2,12 +2,12 @@
   <div class="row">
     <!-- Formulário à Esquerda -->
     <div class="col-md-6">
-      <%= form_with(model: character, local: true, html: { class: "needs-validation", novalidate: true }) do |form| %>
-        <% if @characters.present? %>
+      <%= form_with(model: @character, local: true, html: { class: "needs-validation", novalidate: true, multipart: true }) do |form| %>
+        <% if @character.errors.any? %>
           <div class="alert alert-danger">
-            <h4 class="alert-heading"><%= pluralize(character.errors.count, "error") %> prohibited this character from being saved:</h4>
+            <h4 class="alert-heading"><%= pluralize(@character.errors.count, "error") %> prohibited this character from being saved:</h4>
             <ul>
-              <% character.errors.full_messages.each do |message| %>
+              <% @character.errors.full_messages.each do |message| %>
                 <li><%= message %></li>
               <% end %>
             </ul>
@@ -20,13 +20,18 @@
         </div>
 
         <div class="mb-3">
-          <%= form.label :ability, class: "form-label" %>
-          <%= form.text_field :ability, class: "form-control" %>
+          <%= form.label :description, class: "form-label" %>
+          <%= form.text_area :description, class: "form-control" %>
         </div>
 
         <div class="mb-3">
-          <%= form.label :description, class: "form-label" %>
-          <%= form.text_area :description, class: "form-control" %>
+          <%= form.label :ability, class: "form-label" %>
+          <%= form.text_area :ability, class: "form-control" %>
+        </div>
+
+        <div class="mb-3">
+          <%= form.label :image, class: "form-label" %>
+          <%= form.file_field :image, class: "form-control" %>
         </div>
 
         <div class="d-grid gap-2">
@@ -39,14 +44,20 @@
     <div class="col-md-6">
       <div id="characterCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-          <% @characters.each_with_index do |character, index| %>
-            <div class="carousel-item <%= 'active' if index == 0 %>">
-              <%= image_tag character.image.url, class: "d-block w-100" if character.image.attached? %>
-              <div class="carousel-caption d-none d-md-block">
-                <h5><%= character.name %></h5>
-                <p><%= character.description %></p>
+          <% if @characters.present? %>
+            <% @characters.each_with_index do |character, index| %>
+              <div class="carousel-item <%= 'active' if index == 0 %>">
+                <% if character.image.attached? %>
+                  <%= image_tag character.image, class: "d-block w-100" %>
+                <% end %>
+                <div class="carousel-caption d-none d-md-block">
+                  <h5><%= character.name %></h5>
+                  <p><%= character.description %></p>
+                </div>
               </div>
-            </div>
+            <% end %>
+          <% else %>
+            <p>No characters available</p>
           <% end %>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#characterCarousel" data-bs-slide="prev">

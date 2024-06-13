@@ -1,8 +1,8 @@
-<h1>Character: <%= @character.nome %></h1>
+<h1>Character: <%= @character.name %></h1>
 
 <p>
   <strong>Nome:</strong>
-  <%= @character.nome %>
+  <%= @character.name %>
 </p>
 
 <p>
@@ -14,6 +14,12 @@
   <strong>Descrição:</strong>
   <%= @character.description %>
 </p>
-
+<div class="col-md-6">
+      <% if @character.image.attached? %>
+        <%= image_tag @character.image, class: "img-fluid" %>
+      <% else %>
+        <p>No image available for this character</p>
+      <% end %>
+    </div>
 <%= link_to 'Edit', edit_character_path(@character) %> |
 <%= link_to 'Back', characters_path %>

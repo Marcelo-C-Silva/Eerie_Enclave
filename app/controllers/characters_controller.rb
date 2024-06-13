@@ -2,24 +2,16 @@ class CharactersController < ApplicationController
   before_action :set_character, only: %i[show edit update destroy]
 
   def index
-    @character = Character.all
+    @characters = Character.all
   end
 
-  def show
-  end
+  def show; end
 
   def new
-    def new
-      @characters = Character.all
-      @character = Character.new
-    end
-    
+    @character = Character.new
   end
 
-  def edit
-    @character = Character.find(params[:id])
-  end
-  
+  def edit; end
 
   def create
     @character = Character.new(character_params)
@@ -51,6 +43,6 @@ class CharactersController < ApplicationController
   end
 
   def character_params
-    params.require(:character).permit(:nome, :raca, :classe, :atributos, :habilidades)
+    params.require(:character).permit(:name, :description, :ability, :image)
   end
 end
